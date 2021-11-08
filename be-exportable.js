@@ -1,4 +1,5 @@
 import { define } from 'be-decorated/be-decorated.js';
+import { register } from 'be-hive/register.js';
 const cache = {};
 export class BeExportableController {
     static cache = {};
@@ -67,3 +68,4 @@ define({
         controller: BeExportableController
     }
 });
+register(ifWantsToBe, upgrade, tagName);

@@ -1,5 +1,6 @@
 import {BeExportableActions, BeExportableProps, BeExportableVirtualProps} from './types';
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
+import {register} from 'be-hive/register.js';
 
 const cache : {[key: string]: string} = {};
 export class BeExportableController implements BeExportableActions {
@@ -75,3 +76,5 @@ define<BeExportableProps & BeDecoratedProps<BeExportableProps, BeExportableActio
         controller: BeExportableController
     }
 });
+
+register(ifWantsToBe, upgrade, tagName);
