@@ -1,4 +1,4 @@
-# be-exportable [TODO]
+# be-exportable
 
 ```html
 <script nomodule be-exportable>
