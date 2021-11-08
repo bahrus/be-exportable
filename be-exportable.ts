@@ -65,7 +65,8 @@ define<BeExportableProps & BeDecoratedProps<BeExportableProps, BeExportableActio
             ifWantsToBe,
             upgrade,
             forceVisible: true,
-            virtualProps:[]
+            virtualProps:[],
+            noParse: true,
         }
 
     },
