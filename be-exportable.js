@@ -58,7 +58,9 @@ define({
             ifWantsToBe,
             upgrade,
             forceVisible: true,
-            virtualProps: []
+            virtualProps: [],
+            noParse: true,
+            intro: 'intro'
         }
     },
     complexPropDefaults: {

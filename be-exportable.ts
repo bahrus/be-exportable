@@ -67,6 +67,7 @@ define<BeExportableProps & BeDecoratedProps<BeExportableProps, BeExportableActio
             forceVisible: true,
             virtualProps:[],
             noParse: true,
+            intro: 'intro'
         }
 
     },
