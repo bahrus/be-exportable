@@ -1,20 +1,42 @@
 {
   "name": "be-exportable",
   "version": "0.0.4",
-  "description": "",
-  "main": "index.js",
+  "keywords": [
+    "web-components",
+    "web-component",
+    "custom-element",
+    "custom-elements"
+  ],
+  "description": "Make exports from inside a script tag accessible from the DOM.",
+  "main": "be-exportable.js",
+  "module": "be-exportable.js",
+  "exports":{
+    ".": "./be-exportable.js",
+    "./be-exportable.js": "./be-exportable.js"
+  },
+  "files":[
+    "*.*"
+  ],
+  "types": "types.d.ts",
   "dependencies": {
     "be-decorated": "0.0.56",
     "be-hive": "0.0.15"
   },
+  "devDependencies": {
+    "@skypack/package-check": "0.2.2",
+    "xtal-test": "0.0.54",
+    "@custom-elements-manifest/analyzer": "0.5.7"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node node_modules/xtal-test/serve.js",
+    "package-check": "package-check"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bahrus/be-exportable.git"
   },
-  "author": "",
+  "author": "anderson.bruce.b@gmail.com (Bruce Anderson)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bahrus/be-exportable/issues"
