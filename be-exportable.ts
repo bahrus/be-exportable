@@ -41,7 +41,7 @@ export class BeExportableController implements BeExportableActions {
             }
         }))
     }
-    window['${key}'].dispatchEvent(new Event('loaded'));
+    window['${key}'].dispatchEvent(new Event('load'));
     window['${key}'].dataset.loaded = 'true';
     `;
         const scriptTag = document.createElement('script');
