@@ -1,6 +1,6 @@
 {
   "name": "be-exportable",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "keywords": [
     "web-components",
     "web-component",
@@ -10,11 +10,11 @@
   "description": "Make exports from inside a script tag accessible from the DOM.",
   "main": "be-exportable.js",
   "module": "be-exportable.js",
-  "exports":{
+  "exports": {
     ".": "./be-exportable.js",
     "./be-exportable.js": "./be-exportable.js"
   },
-  "files":[
+  "files": [
     "*.*"
   ],
   "types": "types.d.ts",
