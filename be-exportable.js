@@ -19,7 +19,7 @@ export class BeExportableController {
         else {
             innerText = target.innerText;
         }
-        innerText = innerText.replace(/selfish/g, `window['${key}']`);
+        innerText = innerText.replaceAll('selfish', `window['${key}']`);
         const splitText = innerText.split('export const ');
         //let iPos = 0;
         const winKey = `window['${key}']`;
@@ -58,7 +58,7 @@ define({
         propDefaults: {
             ifWantsToBe,
             upgrade,
-            forceVisible: true,
+            forceVisible: ['script'],
             virtualProps: [],
             noParse: true,
             intro: 'intro'

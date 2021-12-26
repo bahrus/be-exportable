@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "be-decorated": "0.0.40",
-    "be-hive": "0.0.9"
+    "be-decorated": "0.0.56",
+    "be-hive": "0.0.15"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
