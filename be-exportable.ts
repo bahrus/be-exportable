@@ -18,6 +18,8 @@ export class BeExportableController implements BeExportableActions {
                     (<any>target)._modExport = module;
                 });
             });
+            target.dispatchEvent(new Event('load'));
+            target.dataset.loaded = 'true';
             return;
         }
         innerText = target.innerText;

@@ -2,6 +2,8 @@
 
 <a href="https://nodei.co/npm/xtal-editor/"><img src="https://nodei.co/npm/xtal-editor.png"></a>
 
+## Inline scripts
+
 Make exports from inside a script tag accessible from the DOM.
 
 ```html
@@ -11,4 +13,18 @@ Make exports from inside a script tag accessible from the DOM.
 </script>
 ```
 
-Exports get assigned to proxy associated with be-exportable - can emit events since based on be-decorated.  Accessed via be-observant.
+Inline scripts can reference the script tag with the keyword "selfish".
+
+Inline scripts are quite limited in the syntax.  Only "export const blah" is exported.
+
+## External scripts
+
+External scripts are far more flexible, but cannot reference the script tag with the keyword "selfish".
+
+```html
+<script nomodule src="blah/blah.js" be-exportable>
+</script>
+```
+
+The code first tries evaluating import('blah/blah.js').  If that fails, it prepends https://esm.run/ to the path, and tries that.
+

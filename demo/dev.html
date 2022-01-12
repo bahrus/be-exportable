@@ -20,12 +20,6 @@
     <script type=module>
         import '../be-exportable.js'
     </script>
-    <script type=module>
-        async function tryImport(){
-            const test = await import('./test.js');
-            console.log(test);
-        }
-        tryImport();
-    </script>
+    <script nomodule src="./test.js" be-exportable></script>
 </body>
 </html>
