@@ -9,16 +9,16 @@ export class BeExportableController {
         target._modExport = {};
         let innerText;
         if (target.src) {
-            if (cache[target.src] === undefined) {
-                const resp = await fetch(target.src);
-                const text = await resp.text();
-                cache[target.src] = text;
-            }
-            innerText = cache[target.src];
+            import(target.src).then(module => {
+                target._modExport = module;
+            }).catch(() => {
+                import('https://esm.run/' + target.src).then(module => {
+                    target._modExport = module;
+                });
+            });
+            return;
         }
-        else {
-            innerText = target.innerText;
-        }
+        innerText = target.innerText;
         innerText = innerText.replaceAll('selfish', `window['${key}']`);
         const splitText = innerText.split('export const ');
         //let iPos = 0;

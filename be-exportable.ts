@@ -11,15 +11,16 @@ export class BeExportableController implements BeExportableActions {
         (<any>target)._modExport = {};
         let innerText: string | undefined;
         if(target.src){
-            if(cache[target.src] === undefined){
-                const resp = await fetch(target.src);
-                const text = await resp.text();
-                cache[target.src] = text;
-            }
-            innerText = cache[target.src];
-        }else{
-            innerText = target.innerText;
+            import(target.src).then(module => {
+                (<any>target)._modExport = module;
+            }).catch(() => {
+                import('https://esm.run/' + target.src).then(module => {
+                    (<any>target)._modExport = module;
+                });
+            });
+            return;
         }
+        innerText = target.innerText;
         innerText = innerText.replaceAll('selfish', `window['${key}']`);
         const splitText = innerText.split('export const ');
         //let iPos = 0;
