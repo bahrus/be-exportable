@@ -13,13 +13,16 @@ export class BeExportableController implements BeExportableActions {
         if(target.src){
             import(target.src).then(module => {
                 (<any>target)._modExport = module;
+                target.dispatchEvent(new Event('load'));
+                target.dataset.loaded = 'true';
             }).catch(() => {
                 import('https://esm.run/' + target.src).then(module => {
                     (<any>target)._modExport = module;
+                    target.dispatchEvent(new Event('load'));
+                    target.dataset.loaded = 'true';
                 });
             });
-            target.dispatchEvent(new Event('load'));
-            target.dataset.loaded = 'true';
+            
             return;
         }
         innerText = target.innerText;

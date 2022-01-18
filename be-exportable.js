@@ -11,13 +11,15 @@ export class BeExportableController {
         if (target.src) {
             import(target.src).then(module => {
                 target._modExport = module;
+                target.dispatchEvent(new Event('load'));
+                target.dataset.loaded = 'true';
             }).catch(() => {
                 import('https://esm.run/' + target.src).then(module => {
                     target._modExport = module;
+                    target.dispatchEvent(new Event('load'));
+                    target.dataset.loaded = 'true';
                 });
             });
-            target.dispatchEvent(new Event('load'));
-            target.dataset.loaded = 'true';
             return;
         }
         innerText = target.innerText;
