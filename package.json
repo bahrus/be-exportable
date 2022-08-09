@@ -19,17 +19,17 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.112",
-    "be-hive": "0.0.44"
+    "be-decorated": "0.0.118",
+    "be-hive": "0.0.50"
   },
   "devDependencies": {
     "@skypack/package-check": "0.2.2",
-    "xtal-test": "0.0.56",
-    "@custom-elements-manifest/analyzer": "0.5.7"
+    "may-it-serve": "0.0.2",
+    "@custom-elements-manifest/analyzer": "0.6.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node node_modules/xtal-test/serve.js",
+    "serve": "node node_modules/may-it-serve/serve.js",
     "package-check": "package-check"
   },
   "repository": {
