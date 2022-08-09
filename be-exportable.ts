@@ -38,15 +38,7 @@ export class BeExportableController implements BeExportableActions {
         }
         let modifiedText = splitText.join('');
         modifiedText = /* js */`
-    try{
-        ${modifiedText}
-    }catch(err){
-        window['${key}'].dispatchEvent(new CustomEvent('err', {
-            detail: {
-                message: err
-            }
-        }))
-    }
+    ${modifiedText}
     window['${key}'].dispatchEvent(new Event('load'));
     window['${key}'].dataset.loaded = 'true';
     `;
