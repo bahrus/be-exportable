@@ -10,6 +10,7 @@
   "description": "Make exports from inside a script tag accessible from the DOM.",
   "main": "be-exportable.js",
   "module": "be-exportable.js",
+  "type": "module",
   "exports": {
     ".": "./be-exportable.js",
     "./be-exportable.js": "./be-exportable.js",
