@@ -1,4 +1,4 @@
-export function importFromScriptRef<TExports>(shadowDOMPeerCitizen: Element, id: string) : Promise<TExports> {
+export function importFromScriptRef<TExports = any>(shadowDOMPeerCitizen: Element, id: string) : Promise<TExports> {
     return new Promise<TExports>((resolve, reject) =>{
         const query = '#' + id;
         const container = shadowDOMPeerCitizen.getRootNode() as Document | DocumentFragment;
