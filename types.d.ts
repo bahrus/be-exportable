@@ -11,8 +11,3 @@ export interface BeExportableProps extends BeExportableVirtualProps{
 export interface BeExportableActions{
     intro(proxy: HTMLScriptElement & BeExportableVirtualProps, target: HTMLScriptElement, beDecorProps: BeDecoratedProps): void;
 }
-
-export interface beBeckonedFrom{
-    container: Element | DocumentFragment | Document,
-    id?: string,
-}
