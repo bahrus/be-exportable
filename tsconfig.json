@@ -9,7 +9,8 @@
 		"watch": true
 	},
 	"files":[
-		"be-exportable.ts"
+		"be-exportable.ts",
+		"beBeckoned.ts",
 	],
 	"exclude":[
 		"build",

@@ -4,7 +4,7 @@ const cache = {};
 export class BeExportableController {
     static cache = {};
     async intro(proxy, target, beDecorProps) {
-        const key = (new Date()).valueOf().toString() + Math.random(); //TODO:  use crypto
+        const key = crypto.randomUUID();
         window[key] = target;
         target._modExport = {};
         let innerText;

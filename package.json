@@ -12,15 +12,16 @@
   "module": "be-exportable.js",
   "exports": {
     ".": "./be-exportable.js",
-    "./be-exportable.js": "./be-exportable.js"
+    "./be-exportable.js": "./be-exportable.js",
+    "./beBeckoned.js": "./beBeckoned.js"
   },
   "files": [
     "*.*"
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.118",
-    "be-hive": "0.0.50"
+    "be-decorated": "0.0.131",
+    "be-hive": "0.0.54"
   },
   "devDependencies": {
     "@skypack/package-check": "0.2.2",

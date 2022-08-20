@@ -6,7 +6,7 @@ const cache : {[key: string]: string} = {};
 export class BeExportableController implements BeExportableActions {
     static cache : {[key: string]: string} = {};
     async intro(proxy: HTMLScriptElement & BeExportableVirtualProps, target: HTMLScriptElement, beDecorProps: BeDecoratedProps){
-        const key = (new Date()).valueOf().toString() + Math.random(); //TODO:  use crypto
+        const key = crypto.randomUUID(); 
         (<any>window)[key] = target;
         (<any>target)._modExport = {};
         let innerText: string | undefined;

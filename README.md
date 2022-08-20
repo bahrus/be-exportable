@@ -13,7 +13,9 @@ Make exports from inside a script tag accessible from the DOM.
 </script>
 ```
 
-The script tag ends up with a custom field:  _modExports that exposes each of the export const's.  It also emits event "load" when it has finished exporting.
+The script tag ends up with a custom field:  _modExport that exposes each of the export const's.  It also emits event "load" when it has finished exporting.
+
+A convenience function, beBeckoned contained in be-exportable/beBeckoned.js is provided to manage this.  Pass in the container to search within, and an optional id, and it will return the exports in a callback.
 
 Inline scripts can reference the script tag with the keyword "selfish".
 
