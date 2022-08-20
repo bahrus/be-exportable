@@ -1,6 +1,11 @@
 # be-exportable
 
-<a href="https://nodei.co/npm/xtal-editor/"><img src="https://nodei.co/npm/xtal-editor.png"></a>
+<a href="https://nodei.co/npm/be-exportable/"><img src="https://nodei.co/npm/be-exportable.png"></a>
+
+
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-exportable?style=for-the-badge)](https://bundlephobia.com/result?p=be-exportable)
+
+<img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-exportable?compression=gzip">
 
 ## Inline scripts
 
