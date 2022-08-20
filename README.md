@@ -13,6 +13,8 @@ Make exports from inside a script tag accessible from the DOM.
 </script>
 ```
 
+The script tag ends up with a custom field:  _modExports that exposes each of the export const's.  It also emits event "load" when it has finished exporting.
+
 Inline scripts can reference the script tag with the keyword "selfish".
 
 Inline scripts are quite limited in the syntax.  Only "export const blah" is exported.
