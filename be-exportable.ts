@@ -2,8 +2,8 @@ import {BeExportableActions, BeExportableProps, BeExportableVirtualProps} from '
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {register} from 'be-hive/register.js';
 
-const cache : {[key: string]: string} = {};
-export class BeExportableController implements BeExportableActions {
+//const cache : {[key: string]: string} = {};
+export class BeExportableController extends EventTarget implements BeExportableActions {
     static cache : {[key: string]: string} = {};
     async intro(proxy: HTMLScriptElement & BeExportableVirtualProps, target: HTMLScriptElement, beDecorProps: BeDecoratedProps){
         const key = crypto.randomUUID(); 
@@ -15,11 +15,13 @@ export class BeExportableController implements BeExportableActions {
                 (<any>target)._modExport = module;
                 target.dispatchEvent(new Event('load'));
                 target.dataset.loaded = 'true';
+                proxy.resolved = true;
             }).catch(() => {
                 import('https://esm.run/' + target.src).then(module => {
                     (<any>target)._modExport = module;
                     target.dispatchEvent(new Event('load'));
                     target.dataset.loaded = 'true';
+                    proxy.resolved = true;
                 });
             });
             
@@ -41,6 +43,7 @@ export class BeExportableController implements BeExportableActions {
     ${modifiedText}
     window['${key}'].dispatchEvent(new Event('load'));
     window['${key}'].dataset.loaded = 'true';
+    window['${key}'].beDecorated.exportable.resolved=true;
     `;
         const scriptTag = document.createElement('script');
         scriptTag.type = 'module';

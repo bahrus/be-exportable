@@ -1,7 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { register } from 'be-hive/register.js';
-const cache = {};
-export class BeExportableController {
+//const cache : {[key: string]: string} = {};
+export class BeExportableController extends EventTarget {
     static cache = {};
     async intro(proxy, target, beDecorProps) {
         const key = crypto.randomUUID();
@@ -13,11 +13,13 @@ export class BeExportableController {
                 target._modExport = module;
                 target.dispatchEvent(new Event('load'));
                 target.dataset.loaded = 'true';
+                proxy.resolved = true;
             }).catch(() => {
                 import('https://esm.run/' + target.src).then(module => {
                     target._modExport = module;
                     target.dispatchEvent(new Event('load'));
                     target.dataset.loaded = 'true';
+                    proxy.resolved = true;
                 });
             });
             return;
@@ -38,6 +40,7 @@ export class BeExportableController {
     ${modifiedText}
     window['${key}'].dispatchEvent(new Event('load'));
     window['${key}'].dataset.loaded = 'true';
+    window['${key}'].beDecorated.exportable.resolved=true;
     `;
         const scriptTag = document.createElement('script');
         scriptTag.type = 'module';
