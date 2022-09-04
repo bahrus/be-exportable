@@ -1,6 +1,5 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { register } from 'be-hive/register.js';
-//const cache : {[key: string]: string} = {};
 export class BeExportableController extends EventTarget {
     static cache = {};
     async intro(proxy, target, beDecorProps) {
@@ -27,7 +26,6 @@ export class BeExportableController extends EventTarget {
         innerText = target.innerText;
         innerText = innerText.replaceAll('selfish', `window['${key}']`);
         const splitText = innerText.split('export const ');
-        //let iPos = 0;
         const winKey = `window['${key}']`;
         for (let i = 1, ii = splitText.length; i < ii; i++) {
             const token = splitText[i];

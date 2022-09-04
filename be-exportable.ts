@@ -1,11 +1,10 @@
-import {BeExportableActions, BeExportableProps, BeExportableVirtualProps} from './types';
+import {BeExportableActions, Proxy, PP, BeExportableVirtualProps} from './types';
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {register} from 'be-hive/register.js';
 
-//const cache : {[key: string]: string} = {};
 export class BeExportableController extends EventTarget implements BeExportableActions {
     static cache : {[key: string]: string} = {};
-    async intro(proxy: HTMLScriptElement & BeExportableVirtualProps, target: HTMLScriptElement, beDecorProps: BeDecoratedProps){
+    async intro(proxy: Proxy, target: HTMLScriptElement, beDecorProps: BeDecoratedProps){
         const key = crypto.randomUUID(); 
         (<any>window)[key] = target;
         (<any>target)._modExport = {};
@@ -30,7 +29,6 @@ export class BeExportableController extends EventTarget implements BeExportableA
         innerText = target.innerText;
         innerText = innerText.replaceAll('selfish', `window['${key}']`);
         const splitText = innerText.split('export const ');
-        //let iPos = 0;
         const winKey = `window['${key}']`;
         for(let i = 1, ii = splitText.length; i < ii; i++){
             const token = splitText[i];
@@ -52,15 +50,12 @@ export class BeExportableController extends EventTarget implements BeExportableA
     }
 }
 
-export interface BeExportableController extends BeExportableProps{
-
-}
 
 const tagName = 'be-exportable';
 const ifWantsToBe = 'exportable';
 const upgrade = 'script';
 
-define<BeExportableProps & BeDecoratedProps<BeExportableProps, BeExportableActions>, BeExportableActions>({
+define<BeExportableVirtualProps & BeDecoratedProps<BeExportableVirtualProps, BeExportableActions>, BeExportableActions>({
     config: {
         tagName,
         propDefaults: {

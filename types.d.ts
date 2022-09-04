@@ -1,13 +1,22 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
 
-export interface BeExportableVirtualProps extends MinimalProxy{
+
+export interface BeExportableEndUserProps{
 
 }
 
-export interface BeExportableProps extends BeExportableVirtualProps{
-    proxy: HTMLScriptElement & BeExportableVirtualProps;
+export interface BeExportableVirtualProps extends BeExportableEndUserProps, MinimalProxy<HTMLScriptElement>{
+
 }
+
+export type Proxy = HTMLScriptElement & BeExportableVirtualProps;
+
+export interface ProxyProps extends BeExportableVirtualProps{
+    proxy: Proxy;
+}
+
+export type PP = ProxyProps;
 
 export interface BeExportableActions{
-    intro(proxy: HTMLScriptElement & BeExportableVirtualProps, target: HTMLScriptElement, beDecorProps: BeDecoratedProps): void;
+    intro(proxy: Proxy, target: HTMLScriptElement, beDecorProps: BeDecoratedProps): void;
 }
