@@ -1,9 +1,14 @@
 # be-exportable
 
+[![Playwright Tests](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml)
+
 <a href="https://nodei.co/npm/be-exportable/"><img src="https://nodei.co/npm/be-exportable.png"></a>
 
+Size of package, including custom element behavior framework (be-decorated):
 
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-exportable?style=for-the-badge)](https://bundlephobia.com/result?p=be-exportable)
+
+Size of new code in this package:
 
 <img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-exportable?compression=gzip">
 
@@ -40,4 +45,30 @@ External scripts are far more flexible, but cannot reference the script tag with
 ```
 
 The code first tries evaluating import('blah/blah.js').  If that fails, it prepends https://esm.run/ to the path, and tries that.
+
+## Viewing Locally
+
+1.  Install git.
+2.  Fork/clone this repo.
+3.  Install node.
+4.  Open command window to folder where you cloned this repo.
+5.  > npm install
+6.  > npm run serve
+7.  Open http://localhost:3030/demo/dev in a modern browser.
+
+## Importing in ES Modules:
+
+```JavaScript
+import from 'be-exportable/be-exportable.js';
+
+const {importFromScriptRef} = await import('be-exportable/importFromScriptRef.js');
+```
+
+## Using from CDN:
+
+```html
+<script type=module crossorigin=anonymous>
+    import 'https://esm.run/be-evanescent';
+</script>
+```
 
