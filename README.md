@@ -59,7 +59,7 @@ The code first tries evaluating import('blah/blah.js').  If that fails, it prepe
 ## Importing in ES Modules:
 
 ```JavaScript
-import from 'be-exportable/be-exportable.js';
+import 'be-exportable/be-exportable.js';
 
 const {importFromScriptRef} = await import('be-exportable/importFromScriptRef.js');
 ```
