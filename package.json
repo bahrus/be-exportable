@@ -10,27 +10,27 @@
   "description": "Make exports from inside a script tag accessible from the DOM.",
   "main": "be-exportable.js",
   "module": "be-exportable.js",
-  "type": "module",
   "exports": {
     ".": "./be-exportable.js",
     "./be-exportable.js": "./be-exportable.js",
-    "./beBeckoned.js": "./beBeckoned.js"
+    "./importFromScriptRef.js": "./importFromScriptRef.js"
   },
   "files": [
     "*.*"
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.153",
-    "be-hive": "0.0.63"
+    "be-decorated": "0.0.158",
+    "be-hive": "0.0.65"
   },
   "devDependencies": {
     "@skypack/package-check": "0.2.2",
+    "@playwright/test": "1.25.2",
     "may-it-serve": "0.0.2",
     "@custom-elements-manifest/analyzer": "0.6.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "playwright test",
     "serve": "node node_modules/may-it-serve/serve.js",
     "package-check": "package-check"
   },

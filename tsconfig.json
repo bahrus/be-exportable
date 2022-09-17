@@ -10,7 +10,8 @@
 	},
 	"files":[
 		"be-exportable.ts",
-		"importFromScriptRef.ts",
+		"importFromScriptRef.ts"
+
 	],
 	"exclude":[
 		"build",
