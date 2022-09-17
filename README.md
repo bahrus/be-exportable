@@ -68,7 +68,7 @@ const {importFromScriptRef} = await import('be-exportable/importFromScriptRef.js
 
 ```html
 <script type=module crossorigin=anonymous>
-    import 'https://esm.run/be-evanescent';
+    import 'https://esm.run/be-exportable';
 </script>
 ```
 
