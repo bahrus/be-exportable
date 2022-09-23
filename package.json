@@ -20,8 +20,8 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.161",
-    "be-hive": "0.0.66"
+    "be-decorated": "0.0.162",
+    "be-hive": "0.0.67"
   },
   "devDependencies": {
     "@skypack/package-check": "0.2.2",
