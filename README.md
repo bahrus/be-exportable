@@ -44,7 +44,6 @@ External scripts are far more flexible, but cannot reference the script tag with
 </script>
 ```
 
-The code first tries evaluating import('blah/blah.js').  If that fails, it prepends https://esm.run/ to the path, and tries that.
 
 ## Viewing Locally
 

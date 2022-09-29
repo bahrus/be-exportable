@@ -8,19 +8,11 @@ export class BeExportableController extends EventTarget {
         target._modExport = {};
         let innerText;
         if (target.src) {
-            import(target.src).then(module => {
-                target._modExport = module;
-                target.dispatchEvent(new Event('load'));
-                target.dataset.loaded = 'true';
-                proxy.resolved = true;
-            }).catch(() => {
-                import('https://esm.run/' + target.src).then(module => {
-                    target._modExport = module;
-                    target.dispatchEvent(new Event('load'));
-                    target.dataset.loaded = 'true';
-                    proxy.resolved = true;
-                });
-            });
+            const module = await import(target.src); //.then(module => {
+            target._modExport = module;
+            target.dispatchEvent(new Event('load'));
+            target.dataset.loaded = 'true';
+            proxy.resolved = true;
             return;
         }
         innerText = target.innerText;
