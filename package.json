@@ -20,7 +20,7 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.171",
+    "be-decorated": "0.0.172",
     "be-hive": "0.0.73"
   },
   "devDependencies": {
