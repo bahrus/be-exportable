@@ -4,7 +4,7 @@
 
 <a href="https://nodei.co/npm/be-exportable/"><img src="https://nodei.co/npm/be-exportable.png"></a>
 
-Size of package, including custom element behavior framework (be-decorated):
+Size of package, including custom element behavior framework (be-decorated/be-hive):
 
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-exportable?style=for-the-badge)](https://bundlephobia.com/result?p=be-exportable)
 
