@@ -1,8 +1,7 @@
 # be-exportable
 
 [![Playwright Tests](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml)
-
-<a href="https://nodei.co/npm/be-exportable/"><img src="https://nodei.co/npm/be-exportable.png"></a>
+[![NPM version](https://badge.fury.io/js/be-exportable.png)](http://badge.fury.io/js/be-exportable)
 
 Size of package, including custom element behavior framework (be-decorated/be-hive):
 
