@@ -20,12 +20,12 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.207",
+    "be-decorated": "0.0.211",
     "be-hive": "0.0.78"
   },
   "devDependencies": {
     "@skypack/package-check": "0.2.2",
-    "@playwright/test": "1.29.0",
+    "@playwright/test": "1.29.1",
     "may-it-serve": "0.0.4",
     "@custom-elements-manifest/analyzer": "0.6.4"
   },
