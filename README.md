@@ -43,6 +43,10 @@ External scripts are far more flexible, but cannot reference the script tag with
 </script>
 ```
 
+## Repeating script tag
+
+If the adorned script tag is inside a template / shadowDOM realm that is repeated throughout the page, the script tag can share  the same export constants by setting the id to something starting with "shared-".
+
 
 ## Viewing Locally
 

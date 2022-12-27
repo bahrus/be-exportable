@@ -7,7 +7,7 @@ export class BeExportableController extends EventTarget implements Actions {
 
     async hydrate(pp: PP){
         const {self, proxy} = pp;
-        if(self.id){
+        if(self.id.startsWith('shared-')){
             if(sharedTags.has(self.id)){
                 const sharedElement = sharedTags.get(self.id)!;
                 (<any>self)._modExport = (<any>sharedElement)._modExport;
