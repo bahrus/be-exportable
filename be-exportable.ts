@@ -4,23 +4,47 @@ import {register} from 'be-hive/register.js';
 
 export class BeExportableController extends EventTarget implements Actions {
     static cache : {[key: string]: string} = {};
-    async intro(proxy: Proxy, target: HTMLScriptElement, beDecorProps: BeDecoratedProps){
 
-        (<any>target)._modExport = {};
+    async hydrate(pp: PP){
+        const {self, proxy} = pp;
+        if(self.id){
+            if(sharedTags.has(self.id)){
+                const sharedElement = sharedTags.get(self.id)!;
+                (<any>self)._modExport = (<any>sharedElement)._modExport;
+                if(sharedElement.dataset.loaded === 'true'){
+                    self.dispatchEvent(new Event('load'));
+                    self.dataset.loaded = 'true';
+                    proxy.resolved = true;
+                    return;
+                }
+                sharedElement.addEventListener('load', e=> {
+                    self.dispatchEvent(new Event('load'));
+                    self.dataset.loaded = 'true';
+                    proxy.resolved = true;
+                    return;
+                });
+                return;
+            }else{
+                sharedTags.set(self.id, self);
+            }
+        }
+        (<any>self)._modExport = {};
         let innerText: string | undefined;
-        if(target.src){
-            const module = await import(target.src);//.then(module => {
-            (<any>target)._modExport = module;
-            target.dispatchEvent(new Event('load'));
-            target.dataset.loaded = 'true';
+        if(self.src){
+            const module = await import(self.src);//.then(module => {
+            (<any>self)._modExport = module;
+            self.dispatchEvent(new Event('load'));
+            self.dataset.loaded = 'true';
             proxy.resolved = true;
             return;
         }else{
             const {doInline} = await import('./doInline.js');
-            doInline(target);
+            doInline(self);
         }
     }
 }
+
+const sharedTags = new Map<string, HTMLScriptElement>();
 
 
 const tagName = 'be-exportable';
@@ -34,10 +58,16 @@ define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
             ifWantsToBe,
             upgrade,
             forceVisible: ['script'],
-            virtualProps:[],
-            noParse: true,
-            intro: 'intro'
+            virtualProps:['beOosoom', 'enabled'],
+            proxyPropDefaults:{
+                beOosoom: 'enabled',
+                enabled: true,
+            },
+        },
+        actions:{
+            hydrate: 'enabled',
         }
+
 
     },
     complexPropDefaults:{
