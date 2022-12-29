@@ -7,6 +7,7 @@ export class BeExportableController extends EventTarget implements Actions {
 
     async hydrate(pp: PP){
         const {self, proxy} = pp;
+        delete self.dataset.loaded;
         if(self.id.startsWith('shared-')){
             if(sharedTags.has(self.id)){
                 const sharedElement = sharedTags.get(self.id)!;
