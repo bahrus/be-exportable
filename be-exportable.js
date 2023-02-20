@@ -1,14 +1,15 @@
 import { define } from 'be-decorated/DE.js';
 import { register } from 'be-hive/register.js';
-export class BeExportableController extends EventTarget {
+class BeExportableController extends EventTarget {
     static cache = {};
     async hydrate(pp) {
         const { self, proxy } = pp;
         delete self.dataset.loaded;
+        const expScr = self;
         if (self.id.startsWith('shared-')) {
             if (sharedTags.has(self.id)) {
                 const sharedElement = sharedTags.get(self.id);
-                self._modExport = sharedElement._modExport;
+                expScr._modExport = sharedElement._modExport;
                 if (sharedElement.dataset.loaded === 'true') {
                     self.dispatchEvent(new Event('load'));
                     self.dataset.loaded = 'true';
@@ -27,11 +28,11 @@ export class BeExportableController extends EventTarget {
                 sharedTags.set(self.id, self);
             }
         }
-        self._modExport = {};
+        expScr._modExport = {};
         let innerText;
         if (self.src) {
             const module = await import(self.src); //.then(module => {
-            self._modExport = module;
+            expScr._modExport = module;
             self.dispatchEvent(new Event('load'));
             self.dataset.loaded = 'true';
             proxy.resolved = true;
@@ -43,6 +44,7 @@ export class BeExportableController extends EventTarget {
         }
     }
 }
+export { BeExportableController };
 const sharedTags = new Map();
 const tagName = 'be-exportable';
 const ifWantsToBe = 'exportable';

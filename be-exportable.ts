@@ -1,4 +1,4 @@
-import {Actions, Proxy, PP, VirtualProps} from './types';
+import {Actions, Proxy, PP, VirtualProps, ExportableScript} from './types';
 import {define, BeDecoratedProps} from 'be-decorated/DE.js';
 import {register} from 'be-hive/register.js';
 
@@ -8,10 +8,11 @@ export class BeExportableController extends EventTarget implements Actions {
     async hydrate(pp: PP){
         const {self, proxy} = pp;
         delete self.dataset.loaded;
+        const expScr = self as ExportableScript;
         if(self.id.startsWith('shared-')){
             if(sharedTags.has(self.id)){
-                const sharedElement = sharedTags.get(self.id)!;
-                (<any>self)._modExport = (<any>sharedElement)._modExport;
+                const sharedElement = sharedTags.get(self.id)! as ExportableScript;
+                expScr._modExport = sharedElement._modExport;
                 if(sharedElement.dataset.loaded === 'true'){
                     self.dispatchEvent(new Event('load'));
                     self.dataset.loaded = 'true';
@@ -29,11 +30,11 @@ export class BeExportableController extends EventTarget implements Actions {
                 sharedTags.set(self.id, self);
             }
         }
-        (<any>self)._modExport = {};
+        expScr._modExport = {};
         let innerText: string | undefined;
         if(self.src){
             const module = await import(self.src);//.then(module => {
-            (<any>self)._modExport = module;
+            expScr._modExport = module;
             self.dispatchEvent(new Event('load'));
             self.dataset.loaded = 'true';
             proxy.resolved = true;

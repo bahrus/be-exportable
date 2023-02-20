@@ -23,3 +23,8 @@ export type PP = ProxyProps;
 export interface Actions{
     hydrate(pp: PP): void;
 }
+
+export interface ExportableScript<Exports=any> extends HTMLScriptElement{
+    _modExport: Exports;
+}
+
