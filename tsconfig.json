@@ -9,7 +9,7 @@
 		"watch": true
 	},
 	"files":[
-		"be-exportable.ts",
+		"be-exportable2.ts",
 		"importFromScriptRef.ts"
 
 	],

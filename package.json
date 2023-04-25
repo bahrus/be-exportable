@@ -5,7 +5,11 @@
     "web-components",
     "web-component",
     "custom-element",
-    "custom-elements"
+    "custom-elements",
+    "decorate",
+    "enhancement",
+    "behavior",
+    "directive"
   ],
   "description": "Make exports from inside a script tag accessible from the DOM.",
   "main": "be-exportable.js",
@@ -20,12 +24,14 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-decorated": "0.0.238",
-    "be-hive": "0.0.82"
+    "be-enhanced": "0.0.3",
+    "be-hive": "0.0.83",
+    "trans-render": "0.0.672",
+    "xtal-element": "0.0.556"
   },
   "devDependencies": {
     "@skypack/package-check": "0.2.2",
-    "@playwright/test": "1.32.1",
+    "@playwright/test": "1.32.3",
     "may-it-serve": "0.0.5"
   },
   "scripts": {
