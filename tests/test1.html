@@ -12,7 +12,7 @@
             "imports": {
                 "trans-render/": "../node_modules/trans-render/",
                 "xtal-element/": "../node_modules/xtal-element/",
-                "be-decorated/": "../node_modules/be-decorated/",
+                "be-enhanced/": "../node_modules/be-enhanced/",
                 "be-hive/":  "../node_modules/be-hive/"
             }
         }
@@ -25,7 +25,7 @@
     <script>
         function runScript(){
             const scr = document.querySelector('script[nomodule]');
-            if(scr._modExport.hello === 'world'){
+            if(scr.beEnhanced.beExportable.exports.hello === 'world'){
                 target.setAttribute('mark', 'good');
             }
            

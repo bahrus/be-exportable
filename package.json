@@ -16,8 +16,7 @@
   "module": "be-exportable.js",
   "exports": {
     ".": "./be-exportable.js",
-    "./be-exportable.js": "./be-exportable.js",
-    "./importFromScriptRef.js": "./importFromScriptRef.js"
+    "./be-exportable.js": "./be-exportable.js"
   },
   "files": [
     "*.*"

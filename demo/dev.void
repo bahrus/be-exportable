@@ -12,13 +12,13 @@
             "imports": {
                 "trans-render/": "../node_modules/trans-render/",
                 "xtal-element/": "../node_modules/xtal-element/",
-                "be-enhanced/": "../node_modules/be-enhanced/",
+                "be-decorated/": "../node_modules/be-decorated/",
                 "be-hive/":  "../node_modules/be-hive/"
             }
         }
     </script>
     <script type=module>
-        import '../be-exportable2.js'
+        import '../be-exportable.js'
     </script>
     <script nomodule src="./test.js" be-exportable></script>
 </body>

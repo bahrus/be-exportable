@@ -22,12 +22,14 @@ Make exports from inside a script tag accessible from the DOM.
 </script>
 ```
 
-The script tag ends up with a custom field:  _modExport that exposes each of the export const's.  It also emits event "load" when it has finished exporting.
+The script tag ends up with a custom field:  oScript.beEnhanced.beExportable.exports that exposes each of the export const's.  It also emits event "load" when it has finished exporting.
 
-A convenience function, importFromScriptRef is provided to manage this. 
+To wait for the script to load:
 
 ```JavaScript
-const {action} = await importFromScriptRef(myShadowOMPeerCitizen, id);
+const enhancement = await oScript.beEnhanced.whenDefined('be-exportable');
+await enhancement.whenResolved();
+const exports = enhancement.exports;
 ```
 
 Inline scripts can reference the script tag with the keyword "selfish".
@@ -62,8 +64,6 @@ If the adorned script tag is inside a template / shadowDOM realm that is repeate
 
 ```JavaScript
 import 'be-exportable/be-exportable.js';
-
-const {importFromScriptRef} = await import('be-exportable/importFromScriptRef.js');
 ```
 
 ## Using from CDN:

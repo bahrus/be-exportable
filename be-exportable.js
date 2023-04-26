@@ -1,73 +1,63 @@
-import { define } from 'be-decorated/DE.js';
+import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
+import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
-class BeExportableController extends EventTarget {
-    static cache = {};
-    async hydrate(pp) {
-        const { self, proxy } = pp;
+const cache = {};
+const sharedTags = new Map();
+export class BeExportable extends BE {
+    async hydrate(self) {
         delete self.dataset.loaded;
-        const expScr = self;
-        if (self.id.startsWith('shared-')) {
-            if (sharedTags.has(self.id)) {
-                const sharedElement = sharedTags.get(self.id);
-                expScr._modExport = sharedElement._modExport;
-                if (sharedElement.dataset.loaded === 'true') {
-                    self.dispatchEvent(new Event('load'));
-                    self.dataset.loaded = 'true';
-                    proxy.resolved = true;
-                    return;
-                }
-                sharedElement.addEventListener('load', e => {
-                    self.dispatchEvent(new Event('load'));
-                    self.dataset.loaded = 'true';
-                    proxy.resolved = true;
-                    return;
-                });
+        const { enhancedElement } = self;
+        const { id } = enhancedElement;
+        if (id.startsWith('shared-')) {
+            //throw 'NI';
+            if (sharedTags.has(id)) {
+                const sharedElement = sharedTags.get(id);
+                await sharedElement.whenResolved();
+                self.exports = sharedElement.exports;
+                self.dispatchEvent(new Event('load'));
+                self.dataset.loaded = 'true';
+                self.resolved = true;
                 return;
             }
             else {
-                sharedTags.set(self.id, self);
+                sharedTags.set(id, self);
             }
         }
-        expScr._modExport = {};
+        self.exports = {};
         let innerText;
-        if (self.src) {
-            const module = await import(self.src); //.then(module => {
-            expScr._modExport = module;
+        const { src } = enhancedElement;
+        if (src) {
+            const module = await import(src); //.then(module => {
+            self.exports = module;
             self.dispatchEvent(new Event('load'));
             self.dataset.loaded = 'true';
-            proxy.resolved = true;
+            self.resolved = true;
             return;
         }
         else {
             const { doInline } = await import('./doInline.js');
-            doInline(self);
+            doInline(enhancedElement);
         }
     }
 }
-export { BeExportableController };
-const sharedTags = new Map();
 const tagName = 'be-exportable';
 const ifWantsToBe = 'exportable';
 const upgrade = 'script';
-define({
+const xe = new XE({
     config: {
         tagName,
         propDefaults: {
-            ifWantsToBe,
-            upgrade,
-            forceVisible: ['script'],
-            virtualProps: ['beOosoom', 'enabled'],
-            proxyPropDefaults: {
-                beOosoom: 'enabled',
-                enabled: true,
-            },
+            ...propDefaults,
+            enabled: true,
+            beOosoom: 'enabled',
+        },
+        propInfo: {
+            ...propInfo
         },
         actions: {
-            hydrate: 'enabled',
+            hydrate: 'enabled'
         }
     },
-    complexPropDefaults: {
-        controller: BeExportableController
-    }
+    superclass: BeExportable
 });
 register(ifWantsToBe, upgrade, tagName);

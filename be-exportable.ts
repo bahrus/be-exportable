@@ -1,80 +1,72 @@
-import {Actions, Proxy, PP, VirtualProps, ExportableScript} from './types';
-import {define, BeDecoratedProps} from 'be-decorated/DE.js';
+import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
+
+import {XE} from 'xtal-element/XE.js';
+import {Actions, AllProps} from './types';
 import {register} from 'be-hive/register.js';
 
-export class BeExportableController extends EventTarget implements Actions {
-    static cache : {[key: string]: string} = {};
+const cache : {[key: string]: string} = {};
+const sharedTags = new Map<string, AllProps>();
 
-    async hydrate(pp: PP){
-        const {self, proxy} = pp;
+export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> implements Actions{
+
+    async hydrate(self: AllProps){
         delete self.dataset.loaded;
-        const expScr = self as ExportableScript;
-        if(self.id.startsWith('shared-')){
-            if(sharedTags.has(self.id)){
-                const sharedElement = sharedTags.get(self.id)! as ExportableScript;
-                expScr._modExport = sharedElement._modExport;
-                if(sharedElement.dataset.loaded === 'true'){
-                    self.dispatchEvent(new Event('load'));
-                    self.dataset.loaded = 'true';
-                    proxy.resolved = true;
-                    return;
-                }
-                sharedElement.addEventListener('load', e=> {
-                    self.dispatchEvent(new Event('load'));
-                    self.dataset.loaded = 'true';
-                    proxy.resolved = true;
-                    return;
-                });
+        const {enhancedElement} = self;
+        const {id} = enhancedElement;
+        if(id.startsWith('shared-')){
+            //throw 'NI';
+            if(sharedTags.has(id)){
+                const sharedElement = sharedTags.get(id)! as BeExportable;
+                await sharedElement.whenResolved();
+                self.exports = sharedElement.exports;
+                self.dispatchEvent(new Event('load'));
+                self.dataset.loaded = 'true';
+                self.resolved = true;
                 return;
             }else{
-                sharedTags.set(self.id, self);
+                sharedTags.set(id, self);
             }
         }
-        expScr._modExport = {};
+        self.exports = {};
         let innerText: string | undefined;
-        if(self.src){
-            const module = await import(self.src);//.then(module => {
-            expScr._modExport = module;
+        const {src} = enhancedElement;
+        if(src){
+            const module = await import(src);//.then(module => {
+            self.exports = module;
             self.dispatchEvent(new Event('load'));
             self.dataset.loaded = 'true';
-            proxy.resolved = true;
+            self.resolved = true;
             return;
         }else{
             const {doInline} = await import('./doInline.js');
-            doInline(self);
-        }
+            doInline(enhancedElement);
+        }       
     }
+
 }
 
-const sharedTags = new Map<string, HTMLScriptElement>();
-
+export interface BeExportable extends AllProps{}
 
 const tagName = 'be-exportable';
 const ifWantsToBe = 'exportable';
 const upgrade = 'script';
 
-define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
+const xe = new XE<AllProps, Actions>({
     config: {
         tagName,
-        propDefaults: {
-            ifWantsToBe,
-            upgrade,
-            forceVisible: ['script'],
-            virtualProps:['beOosoom', 'enabled'],
-            proxyPropDefaults:{
-                beOosoom: 'enabled',
-                enabled: true,
-            },
+        propDefaults:{
+            ...propDefaults,
+            enabled: true,
+            beOosoom: 'enabled',
         },
-        actions:{
-            hydrate: 'enabled',
+        propInfo: {
+            ...propInfo
+        },
+        actions: {
+            hydrate: 'enabled'
         }
-
-
     },
-    complexPropDefaults:{
-        controller: BeExportableController
-    }
+    superclass: BeExportable   
 });
 
 register(ifWantsToBe, upgrade, tagName);
