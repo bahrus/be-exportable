@@ -3,7 +3,7 @@
 [![Playwright Tests](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml)
 [![NPM version](https://badge.fury.io/js/be-exportable.png)](http://badge.fury.io/js/be-exportable)
 
-Size of package, including custom element behavior framework (be-decorated/be-hive):
+Size of package, including custom element behavior framework (be-enhanced/be-hive):
 
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-exportable?style=for-the-badge)](https://bundlephobia.com/result?p=be-exportable)
 
