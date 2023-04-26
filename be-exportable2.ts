@@ -8,17 +8,8 @@ const cache : {[key: string]: string} = {};
 const sharedTags = new Map<string, AllProps>();
 
 export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> implements Actions{
-    constructor(){
-        super();
-        console.log('in constructor')
-    }
-    // override async attach(enhancedElement: Element, enhancement: string): Promise<void>{
-    //     console.log({enhancement});
-        
-    // }
 
     async hydrate(self: AllProps){
-        console.log({self, ee: this._ee})
         delete self.dataset.loaded;
         const {enhancedElement} = self;
         const {id} = enhancedElement;

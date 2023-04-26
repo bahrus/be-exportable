@@ -4,15 +4,7 @@ import { register } from 'be-hive/register.js';
 const cache = {};
 const sharedTags = new Map();
 export class BeExportable extends BE {
-    constructor() {
-        super();
-        console.log('in constructor');
-    }
-    // override async attach(enhancedElement: Element, enhancement: string): Promise<void>{
-    //     console.log({enhancement});
-    // }
     async hydrate(self) {
-        console.log({ self, ee: this._ee });
         delete self.dataset.loaded;
         const { enhancedElement } = self;
         const { id } = enhancedElement;
