@@ -9,14 +9,14 @@ export async function doInline(target: HTMLScriptElement){
         const token = splitText[i];
         const iPosOfEq = token.indexOf('=');
         const lhs = token.substr(0, iPosOfEq).trim();
-        splitText[i] = `const ${lhs}  = ${winKey}._modExport.${lhs} = ${token.substr(iPosOfEq + 1)};`
+        splitText[i] = `const ${lhs}  = ${winKey}.beEnhanced.beExportable.exports.${lhs} = ${token.substr(iPosOfEq + 1)};`
     }
     let modifiedText = splitText.join('');
     modifiedText = /* js */`
 ${modifiedText}
 window['${key}'].dispatchEvent(new Event('load'));
 window['${key}'].dataset.loaded = 'true';
-window['${key}'].beDecorated.exportable.resolved=true;
+window['${key}'].beEnhanced.beExportable.resolved=true;
 `;
     const scriptTag = document.createElement('script');
     scriptTag.type = 'module';

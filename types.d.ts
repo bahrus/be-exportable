@@ -1,30 +1,20 @@
-import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
+import {IBE} from 'be-enhanced/types.js';
 
-
-export interface EndUserProps{
+export interface EndUserProps<Exports=any> extends IBE<HTMLScriptElement>{
     //guid?: string;
     //shareByID?: boolean;
     enabled?: boolean;
     beOosoom?: string;
 }
 
-export interface VirtualProps extends EndUserProps, MinimalProxy<HTMLScriptElement>{
-
+export interface AllProps<Exports=any> extends EndUserProps<Exports>{
+    exports?: Exports;
+    
 }
 
-export type Proxy = HTMLScriptElement & VirtualProps;
-
-export interface ProxyProps extends VirtualProps{
-    proxy: Proxy;
-}
-
-export type PP = ProxyProps;
 
 export interface Actions{
-    hydrate(pp: PP): void;
+    hydrate(ap: AllProps): Promise<void>;
 }
 
-export interface ExportableScript<Exports=any> extends HTMLScriptElement{
-    _modExport: Exports;
-}
 

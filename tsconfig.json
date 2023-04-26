@@ -6,7 +6,8 @@
 		"experimentalDecorators": false,
 		"newLine": "LF",
 		"strict": true,
-		"watch": true
+		"watch": true,
+		"lib": ["ESNext", "ESNext.String", "DOM"]
 	},
 	"files":[
 		"be-exportable2.ts",
