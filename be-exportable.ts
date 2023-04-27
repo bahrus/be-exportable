@@ -1,10 +1,9 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
-
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps} from './types';
 import {register} from 'be-hive/register.js';
 
-const cache : {[key: string]: string} = {};
+//const cache : {[key: string]: string} = {};
 const sharedTags = new Map<string, AllProps>();
 
 export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> implements Actions{

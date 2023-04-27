@@ -1,7 +1,7 @@
 import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
-const cache = {};
+//const cache : {[key: string]: string} = {};
 const sharedTags = new Map();
 export class BeExportable extends BE {
     async hydrate(self) {
