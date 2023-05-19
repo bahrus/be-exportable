@@ -24,10 +24,10 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-enhanced": "0.0.17",
-    "be-hive": "0.0.92",
-    "trans-render": "0.0.680",
-    "xtal-element": "0.0.560"
+    "be-enhanced": "0.0.18",
+    "be-hive": "0.0.93",
+    "trans-render": "0.0.681",
+    "xtal-element": "0.0.561"
   },
   "devDependencies": {
     "@playwright/test": "1.33.0",
