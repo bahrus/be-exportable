@@ -6,7 +6,7 @@ const sharedTags = new Map();
 export class BeExportable extends BE {
     async hydrate(self) {
         delete self.dataset.loaded;
-        const { enhancedElement } = self;
+        const { enhancedElement, preferAttrForBareImports } = self;
         const { id } = enhancedElement;
         if (id.startsWith('shared-')) {
             //throw 'NI';
@@ -25,7 +25,19 @@ export class BeExportable extends BE {
         }
         self.exports = {};
         let innerText;
-        const { src } = enhancedElement;
+        let src;
+        if (preferAttrForBareImports) {
+            const attr = enhancedElement.getAttribute('src');
+            if (attr !== null && !attr.startsWith('.') && !attr.startsWith('/')) {
+                src = attr;
+            }
+            else {
+                src = enhancedElement.src;
+            }
+        }
+        else {
+            src = enhancedElement.src;
+        }
         if (src) {
             const module = await import(src); //.then(module => {
             self.exports = module;
@@ -50,6 +62,7 @@ const xe = new XE({
             ...propDefaults,
             enabled: true,
             beOosoom: 'enabled',
+            preferAttrForBareImports: true,
         },
         propInfo: {
             ...propInfo

@@ -10,7 +10,7 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
 
     async hydrate(self: AllProps){
         delete self.dataset.loaded;
-        const {enhancedElement} = self;
+        const {enhancedElement, preferAttrForBareImports} = self;
         const {id} = enhancedElement;
         if(id.startsWith('shared-')){
             //throw 'NI';
@@ -28,7 +28,18 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
         }
         self.exports = {};
         let innerText: string | undefined;
-        const {src} = enhancedElement;
+        let src: string  | undefined;
+        if(preferAttrForBareImports){
+            const attr = enhancedElement.getAttribute('src');
+            if(attr !== null && !attr.startsWith('.') && !attr.startsWith('/')){
+                src = attr;
+            }else {
+                src = enhancedElement.src;
+            }
+        }else{
+            src = enhancedElement.src;
+        }
+        
         if(src){
             const module = await import(src);//.then(module => {
             self.exports = module;
@@ -57,6 +68,7 @@ const xe = new XE<AllProps, Actions>({
             ...propDefaults,
             enabled: true,
             beOosoom: 'enabled',
+            preferAttrForBareImports: true,
         },
         propInfo: {
             ...propInfo

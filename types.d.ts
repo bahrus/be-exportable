@@ -5,6 +5,7 @@ export interface EndUserProps<Exports=any> extends IBE<HTMLScriptElement>{
     //shareByID?: boolean;
     enabled?: boolean;
     beOosoom?: string;
+    preferAttrForBareImports?: boolean;
 }
 
 export interface AllProps<Exports=any> extends EndUserProps<Exports>{
