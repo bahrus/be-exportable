@@ -64,6 +64,7 @@ const upgrade = 'script';
 const xe = new XE<AllProps, Actions>({
     config: {
         tagName,
+        isEnh: true,
         propDefaults:{
             ...propDefaults,
             enabled: true,
