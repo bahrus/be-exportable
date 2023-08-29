@@ -21,6 +21,7 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
                 self.dispatchEvent(new Event('load'));
                 self.dataset.loaded = 'true';
                 self.resolved = true;
+                sharedElement.innerHTML = '';
                 return;
             }else{
                 sharedTags.set(id, self);

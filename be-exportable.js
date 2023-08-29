@@ -17,6 +17,7 @@ export class BeExportable extends BE {
                 self.dispatchEvent(new Event('load'));
                 self.dataset.loaded = 'true';
                 self.resolved = true;
+                sharedElement.innerHTML = '';
                 return;
             }
             else {

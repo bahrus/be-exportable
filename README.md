@@ -27,9 +27,8 @@ The script tag ends up with a custom field:  oScript.beEnhanced.beExportable.exp
 To wait for the script to load:
 
 ```JavaScript
-const enhancement = await oScript.beEnhanced.whenDefined('be-exportable');
-await enhancement.whenResolved();
-const exports = enhancement.exports;
+const enhancement = await oScript.beEnhanced.whenResolved('be-exportable');
+const {foo} = enhancement.exports;
 ```
 
 Inline scripts can reference the script tag with the keyword "selfish".
