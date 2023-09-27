@@ -1,7 +1,7 @@
 import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
-//const cache : {[key: string]: string} = {};
+//TODO:  store in trully global place based on guid (symbol.for)
 const sharedTags = new Map();
 export class BeExportable extends BE {
     async hydrate(self) {
@@ -13,7 +13,6 @@ export class BeExportable extends BE {
             enhancedElement.id = id;
         }
         if (id.startsWith('shared-')) {
-            //throw 'NI';
             if (sharedTags.has(id)) {
                 const sharedElement = sharedTags.get(id);
                 await sharedElement.whenResolved();
