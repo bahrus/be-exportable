@@ -11,7 +11,11 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
     async hydrate(self: AllProps){
         delete self.dataset.loaded;
         const {enhancedElement, preferAttrForBareImports} = self;
-        const {id} = enhancedElement;
+        let {id} = enhancedElement;
+        if(!id){
+            id = 'shared-' + crypto.randomUUID();
+            enhancedElement.id = id;
+        }
         if(id.startsWith('shared-')){
             //throw 'NI';
             if(sharedTags.has(id)){
