@@ -3,7 +3,7 @@ import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps} from './types';
 import {register} from 'be-hive/register.js';
 
-//const cache : {[key: string]: string} = {};
+//TODO:  store in trully global place based on guid (symbol.for)
 const sharedTags = new Map<string, AllProps>();
 
 export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> implements Actions{
@@ -11,9 +11,12 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
     async hydrate(self: AllProps){
         delete self.dataset.loaded;
         const {enhancedElement, preferAttrForBareImports} = self;
-        const {id} = enhancedElement;
+        let {id} = enhancedElement;
+        if(!id){
+            id = 'shared-' + crypto.randomUUID();
+            enhancedElement.id = id;
+        }
         if(id.startsWith('shared-')){
-            //throw 'NI';
             if(sharedTags.has(id)){
                 const sharedElement = sharedTags.get(id)! as BeExportable;
                 await sharedElement.whenResolved();
