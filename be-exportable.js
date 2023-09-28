@@ -52,7 +52,8 @@ export class BeExportable extends BE {
         }
         else {
             const { doInline } = await import('./doInline.js');
-            doInline(enhancedElement);
+            await doInline(enhancedElement);
+            //self.resolved = true;
         }
     }
 }

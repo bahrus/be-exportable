@@ -21,5 +21,8 @@ window['${key}'].beEnhanced.beExportable.resolved=true;
     const scriptTag = document.createElement('script');
     scriptTag.type = 'module';
     scriptTag.innerHTML = modifiedText;
+    if (target.id.startsWith('shared-')) {
+        target.innerHTML = '';
+    }
     document.head.appendChild(scriptTag);
 }

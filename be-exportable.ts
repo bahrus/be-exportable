@@ -53,7 +53,8 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
             return;
         }else{
             const {doInline} = await import('./doInline.js');
-            doInline(enhancedElement);
+            await doInline(enhancedElement);
+            //self.resolved = true;
         }       
     }
 
