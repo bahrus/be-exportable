@@ -1,6 +1,6 @@
 import {IBE} from 'be-enhanced/types.js';
 
-export interface EndUserProps<Exports=any> extends IBE<HTMLScriptElement>{
+export interface EndUserProps<Exports=any> extends IBE{
     //guid?: string;
     //shareByID?: boolean;
     enabled?: boolean;
