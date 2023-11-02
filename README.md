@@ -1,4 +1,4 @@
-# be-exportable [WIP]
+# be-exportable
 
 [![Playwright Tests](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml)
 [![NPM version](https://badge.fury.io/js/be-exportable.png)](http://badge.fury.io/js/be-exportable)
@@ -47,21 +47,6 @@ External scripts are far more flexible, but cannot reference the script tag with
 
 If the adorned script tag is inside a template / shadowDOM realm that is repeated throughout the page, the script tag can share  the same export constants by setting the id to something starting with "shared-". To be extra safe, use a guid after the shared- prefix.
 
-## on* handler scripts [TODO]
-
-Another option that can result in more compact syntax, without sacrificing security, is to support script found in existing (but useless in the context it is used) on* handlers:
-
-```html
-<div be-exportable='of onload' onload="export const test='hello';"></div>
-```
-
-To access the export const symbols:
-
-```JavaScript
-const enhancement = await oDiv.beEnhanced.whenResolved('be-exportable');
-const {onload} = enhancement.exports;
-const {test} = onload;
-```
 
 
 ## Viewing Locally
