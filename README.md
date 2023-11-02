@@ -52,7 +52,7 @@ If the adorned script tag is inside a template / shadowDOM realm that is repeate
 Another option that can result in more compact syntax, without sacrificing security, is to support script found in existing (but useless in the context it is used) on* handlers:
 
 ```html
-<div be-exportable onload="export const test='hello';"></div>
+<div be-exportable='of onload' onload="export const test='hello';"></div>
 ```
 
 To access the export const symbols:
