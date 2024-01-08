@@ -1,7 +1,6 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps} from './types';
-import {register} from 'be-hive/register.js';
 
 //TODO:  store in trully global place based on guid (symbol.for)
 const sharedTags = new Map<string, AllProps>();
@@ -62,9 +61,8 @@ export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> imple
 
 export interface BeExportable extends AllProps{}
 
-const tagName = 'be-exportable';
-const ifWantsToBe = 'exportable';
-const upgrade = 'script';
+export const tagName = 'be-exportable';
+
 
 const xe = new XE<AllProps, Actions>({
     config: {
@@ -85,5 +83,3 @@ const xe = new XE<AllProps, Actions>({
     },
     superclass: BeExportable   
 });
-
-register(ifWantsToBe, upgrade, tagName);

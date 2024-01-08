@@ -9,7 +9,7 @@
 		"lib": ["ESNext", "ESNext.String", "DOM"]
 	},
 	"files":[
-		"be-exportable.ts"
+		"behivior.ts"
 
 	],
 	"exclude":[

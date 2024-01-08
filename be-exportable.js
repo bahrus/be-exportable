@@ -1,6 +1,5 @@
 import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
-import { register } from 'be-hive/register.js';
 //TODO:  store in trully global place based on guid (symbol.for)
 const sharedTags = new Map();
 export class BeExportable extends BE {
@@ -57,9 +56,7 @@ export class BeExportable extends BE {
         }
     }
 }
-const tagName = 'be-exportable';
-const ifWantsToBe = 'exportable';
-const upgrade = 'script';
+export const tagName = 'be-exportable';
 const xe = new XE({
     config: {
         tagName,
@@ -79,4 +76,3 @@ const xe = new XE({
     },
     superclass: BeExportable
 });
-register(ifWantsToBe, upgrade, tagName);
