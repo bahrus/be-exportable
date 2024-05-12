@@ -1,31 +1,15 @@
-import {config as beCnfg} from 'be-enhanced/config.js';
-import {BE, BEConfig} from 'be-enhanced/BE.js';
-import {Actions, AllProps} from './types';
-import {MountObserver} from 'mount-observer/MountObserver.js';
-import {IEnhancement,  BEAllProps} from 'trans-render/be/types';
+import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
+import {XE} from 'xtal-element/XE.js';
+import {Actions, AllProps} from '../types.js';
 
-//TODO:  store in truly global place based on guid (symbol.for)
+//TODO:  store in trully global place based on guid (symbol.for)
 const sharedTags = new Map<string, AllProps>();
 
-export class BeExportable extends BE<HTMLScriptElement> implements Actions{
-    static override config: BEConfig<AllProps & BEAllProps, Actions & IEnhancement, any> = {
-        propInfo: {
-            ...(beCnfg.propInfo),
-            attached:{
-                def: true,
-                ro: true,
-            }
-        },
-        actions:{
-            hydrate:{
-                ifAllOf: ['attached']
-            }
-        }
-    };
-    
+export class BeExportable extends BE<AllProps, Actions, HTMLScriptElement> implements Actions{
+
     async hydrate(self: AllProps){
+        delete self.dataset.loaded;
         const {enhancedElement, preferAttrForBareImports} = self;
-        delete enhancedElement.dataset.loaded;
         let {id} = enhancedElement;
         if(!id){
             id = 'shared-' + crypto.randomUUID();
@@ -33,16 +17,14 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
         }
         if(id.startsWith('shared-')){
             if(sharedTags.has(id)){
-                const sharedElement = sharedTags.get(id)! as AllProps;
+                const sharedElement = sharedTags.get(id)! as BeExportable;
                 await sharedElement.whenResolved();
                 self.exports = sharedElement.exports;
                 self.dispatchEvent(new Event('load'));
                 self.dataset.loaded = 'true';
+                self.resolved = true;
                 sharedElement.innerHTML = '';
-                return
-                {
-                    resolved: true
-                };
+                return;
             }else{
                 sharedTags.set(id, self);
             }
@@ -66,15 +48,38 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
             self.exports = module;
             self.dispatchEvent(new Event('load'));
             self.dataset.loaded = 'true';
-            return {
-                resolved: true
-            }
+            self.resolved = true;
+            return;
         }else{
-            const {doInline} = await import('./doInline.js');
+            const {doInline} = await import('../doInline.js');
             await doInline(enhancedElement);
             //self.resolved = true;
         }       
     }
+
 }
 
 export interface BeExportable extends AllProps{}
+
+export const tagName = 'be-exportable';
+
+
+const xe = new XE<AllProps, Actions>({
+    config: {
+        tagName,
+        isEnh: true,
+        propDefaults:{
+            ...propDefaults,
+            enabled: true,
+            beOosoom: 'enabled',
+            preferAttrForBareImports: true,
+        },
+        propInfo: {
+            ...propInfo
+        },
+        actions: {
+            hydrate: 'enabled'
+        }
+    },
+    superclass: BeExportable   
+});

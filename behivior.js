@@ -1,6 +1,17 @@
-import { register } from 'be-hive/register.js';
-import { tagName } from './be-exportable.js';
-import './be-exportable.js';
-const ifWantsToBe = 'exportable';
-const upgrade = 'script';
-register(ifWantsToBe, upgrade, tagName);
+import './behance.js';
+import { BeHive } from 'be-hive/be-hive.js';
+BeHive.registry.register({
+    base: 'be-exportable',
+    enhPropKey: 'beExportable',
+    map: {
+        '0.0': 'ni'
+    },
+    do: {
+        mount: {
+            import: async () => {
+                const { BeExportable } = await import('./be-exportable.js');
+                return BeExportable;
+            }
+        }
+    }
+});

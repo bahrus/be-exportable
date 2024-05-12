@@ -1,25 +1,11 @@
-import { config as beCnfg } from 'be-enhanced/config.js';
-import { BE } from 'be-enhanced/BE.js';
-//TODO:  store in truly global place based on guid (symbol.for)
+import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
+import { XE } from 'xtal-element/XE.js';
+//TODO:  store in trully global place based on guid (symbol.for)
 const sharedTags = new Map();
 export class BeExportable extends BE {
-    static config = {
-        propInfo: {
-            ...(beCnfg.propInfo),
-            attached: {
-                def: true,
-                ro: true,
-            }
-        },
-        actions: {
-            hydrate: {
-                ifAllOf: ['attached']
-            }
-        }
-    };
     async hydrate(self) {
+        delete self.dataset.loaded;
         const { enhancedElement, preferAttrForBareImports } = self;
-        delete enhancedElement.dataset.loaded;
         let { id } = enhancedElement;
         if (!id) {
             id = 'shared-' + crypto.randomUUID();
@@ -32,12 +18,9 @@ export class BeExportable extends BE {
                 self.exports = sharedElement.exports;
                 self.dispatchEvent(new Event('load'));
                 self.dataset.loaded = 'true';
+                self.resolved = true;
                 sharedElement.innerHTML = '';
                 return;
-                {
-                    resolved: true;
-                }
-                ;
             }
             else {
                 sharedTags.set(id, self);
@@ -63,14 +46,33 @@ export class BeExportable extends BE {
             self.exports = module;
             self.dispatchEvent(new Event('load'));
             self.dataset.loaded = 'true';
-            return {
-                resolved: true
-            };
+            self.resolved = true;
+            return;
         }
         else {
-            const { doInline } = await import('./doInline.js');
+            const { doInline } = await import('../doInline.js');
             await doInline(enhancedElement);
             //self.resolved = true;
         }
     }
 }
+export const tagName = 'be-exportable';
+const xe = new XE({
+    config: {
+        tagName,
+        isEnh: true,
+        propDefaults: {
+            ...propDefaults,
+            enabled: true,
+            beOosoom: 'enabled',
+            preferAttrForBareImports: true,
+        },
+        propInfo: {
+            ...propInfo
+        },
+        actions: {
+            hydrate: 'enabled'
+        }
+    },
+    superclass: BeExportable
+});
