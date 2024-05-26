@@ -1,6 +1,6 @@
 import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
-import {Actions, AllProps} from './types';
+import {Actions, AllProps, PAP} from './types';
 import {MountObserver} from 'mount-observer/MountObserver.js';
 import {IEnhancement,  BEAllProps} from 'trans-render/be/types';
 
@@ -23,7 +23,7 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
         }
     };
     
-    async hydrate(self: AllProps){
+    async hydrate(self: AllProps) : Promise<Partial<AllProps>>{
         const {enhancedElement, preferAttrForBareImports} = self;
         delete enhancedElement.dataset.loaded;
         let {id} = enhancedElement;
@@ -39,10 +39,9 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
                 self.dispatchEvent(new Event('load'));
                 self.dataset.loaded = 'true';
                 sharedElement.innerHTML = '';
-                return
-                {
+                return {
                     resolved: true
-                };
+                } as PAP;
             }else{
                 sharedTags.set(id, self);
             }
@@ -68,12 +67,15 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
             self.dataset.loaded = 'true';
             return {
                 resolved: true
-            }
+            } as PAP
         }else{
             const {doInline} = await import('./doInline.js');
             await doInline(enhancedElement);
             //self.resolved = true;
-        }       
+        }  
+        return {
+            resolved: true
+        } as PAP    
     }
 }
 

@@ -1,17 +1,18 @@
-import './behance.js';
 import { BeHive } from 'be-hive/be-hive.js';
-BeHive.registry.register({
-    base: 'be-exportable',
-    enhPropKey: 'beExportable',
+import { MountObserver } from 'mount-observer/MountObserver.js';
+const base = 'be-exportable';
+const emc = {
+    base,
     map: {
         '0.0': 'ni'
     },
-    do: {
-        mount: {
-            import: async () => {
-                const { BeExportable } = await import('./be-exportable.js');
-                return BeExportable;
-            }
-        }
+    enhPropKey: 'beExportable',
+    importEnh: async () => {
+        const { BeExportable } = await import('./behance.js');
+        return BeExportable;
     }
-});
+};
+const mose = document.createElement('script');
+mose.id = base;
+mose.synConfig = emc;
+MountObserver.synthesize(document, BeHive, mose);

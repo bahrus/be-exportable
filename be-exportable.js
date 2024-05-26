@@ -33,11 +33,9 @@ export class BeExportable extends BE {
                 self.dispatchEvent(new Event('load'));
                 self.dataset.loaded = 'true';
                 sharedElement.innerHTML = '';
-                return;
-                {
-                    resolved: true;
-                }
-                ;
+                return {
+                    resolved: true
+                };
             }
             else {
                 sharedTags.set(id, self);
@@ -72,5 +70,8 @@ export class BeExportable extends BE {
             await doInline(enhancedElement);
             //self.resolved = true;
         }
+        return {
+            resolved: true
+        };
     }
 }
