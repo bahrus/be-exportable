@@ -24,9 +24,9 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-enhanced": "0.0.87",
-    "be-hive": "0.0.155",
-    "trans-render": "0.0.769"
+    "be-enhanced": "0.0.95",
+    "be-hive": "0.0.168",
+    "trans-render": "0.0.777"
   },
   "devDependencies": {
     "@playwright/test": "1.44.1",
