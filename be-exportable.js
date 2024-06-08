@@ -15,7 +15,8 @@ export class BeExportable extends BE {
             hydrate: {
                 ifAllOf: ['attached']
             }
-        }
+        },
+        positractions: [...(beCnfg.positractions)]
     };
     async hydrate(self) {
         const { enhancedElement, preferAttrForBareImports } = self;
@@ -31,7 +32,7 @@ export class BeExportable extends BE {
                 await sharedElement.whenResolved();
                 self.exports = sharedElement.exports;
                 self.dispatchEvent(new Event('load'));
-                self.dataset.loaded = 'true';
+                enhancedElement.dataset.loaded = 'true';
                 sharedElement.innerHTML = '';
                 return {
                     resolved: true
@@ -60,7 +61,7 @@ export class BeExportable extends BE {
             const module = await import(src); //.then(module => {
             self.exports = module;
             self.dispatchEvent(new Event('load'));
-            self.dataset.loaded = 'true';
+            enhancedElement.dataset.loaded = 'true';
             return {
                 resolved: true
             };

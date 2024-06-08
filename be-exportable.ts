@@ -20,10 +20,11 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
             hydrate:{
                 ifAllOf: ['attached']
             }
-        }
+        },
+        positractions: [...(beCnfg.positractions)]
     };
     
-    async hydrate(self: AllProps) : Promise<Partial<AllProps>>{
+    async hydrate(self: AllProps & EventTarget) : Promise<Partial<AllProps>>{
         const {enhancedElement, preferAttrForBareImports} = self;
         delete enhancedElement.dataset.loaded;
         let {id} = enhancedElement;
@@ -33,11 +34,11 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
         }
         if(id.startsWith('shared-')){
             if(sharedTags.has(id)){
-                const sharedElement = sharedTags.get(id)! as AllProps;
+                const sharedElement = sharedTags.get(id)! as AllProps & HTMLScriptElement;
                 await sharedElement.whenResolved();
                 self.exports = sharedElement.exports;
                 self.dispatchEvent(new Event('load'));
-                self.dataset.loaded = 'true';
+                enhancedElement.dataset.loaded = 'true';
                 sharedElement.innerHTML = '';
                 return {
                     resolved: true
@@ -64,7 +65,7 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
             const module = await import(src);//.then(module => {
             self.exports = module;
             self.dispatchEvent(new Event('load'));
-            self.dataset.loaded = 'true';
+            enhancedElement.dataset.loaded = 'true';
             return {
                 resolved: true
             } as PAP
