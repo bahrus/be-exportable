@@ -21,7 +21,7 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
                 ifAllOf: ['attached']
             }
         },
-        positractions: [...(beCnfg.positractions)]
+        positractions: [...(beCnfg.positractions!)]
     };
     
     async hydrate(self: AllProps & EventTarget) : Promise<Partial<AllProps>>{

@@ -1,12 +1,8 @@
-import {BeHive, EMC, seed} from 'be-hive/be-hive.js';
-import {MountObserver, MOSE} from 'mount-observer/MountObserver.js';
+import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
 
 const base = 'be-exportable';
 export const emc: EMC = {
     base,
-    // map: {
-    //     '0.0': 'ni'
-    // },
     enhPropKey: 'beExportable',
     importEnh: async () => {
         const {BeExportable} = await import('./behance.js');
