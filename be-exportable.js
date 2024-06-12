@@ -2,7 +2,7 @@ import { config as beCnfg } from 'be-enhanced/config.js';
 import { BE } from 'be-enhanced/BE.js';
 //TODO:  store in truly global place based on guid (symbol.for)
 const sharedTags = new Map();
-export class BeExportable extends BE {
+class BeExportable extends BE {
     static config = {
         propInfo: {
             ...(beCnfg.propInfo),
@@ -76,3 +76,5 @@ export class BeExportable extends BE {
         };
     }
 }
+await BeExportable.bootUp();
+export { BeExportable };

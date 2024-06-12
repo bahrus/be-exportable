@@ -7,7 +7,7 @@ import {IEnhancement,  BEAllProps} from 'trans-render/be/types';
 //TODO:  store in truly global place based on guid (symbol.for)
 const sharedTags = new Map<string, AllProps>();
 
-export class BeExportable extends BE<HTMLScriptElement> implements Actions{
+class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
     static override config: BEConfig<AllProps & BEAllProps, Actions & IEnhancement, any> = {
         propInfo: {
             ...(beCnfg.propInfo),
@@ -80,4 +80,8 @@ export class BeExportable extends BE<HTMLScriptElement> implements Actions{
     }
 }
 
-export interface BeExportable extends AllProps{}
+interface BeExportable extends AllProps{}
+
+await BeExportable.bootUp();
+
+export {BeExportable}

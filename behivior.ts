@@ -5,7 +5,7 @@ export const emc: EMC = {
     base,
     enhPropKey: 'beExportable',
     importEnh: async () => {
-        const {BeExportable} = await import('./behance.js');
+        const {BeExportable} = await import('./be-exportable.js');
         return BeExportable;
     }
 };
