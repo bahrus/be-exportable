@@ -63,16 +63,18 @@ class BeExportable extends BE {
             self.dispatchEvent(new Event('load'));
             enhancedElement.dataset.loaded = 'true';
             return {
-                resolved: true
+            //the script itself does the resolving
+            //resolved: true
             };
         }
         else {
             const { doInline } = await import('./doInline.js');
             await doInline(enhancedElement);
+            //the script itself does the resolving
             //self.resolved = true;
         }
         return {
-            resolved: true
+        //resolved: true
         };
     }
 }

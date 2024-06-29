@@ -67,15 +67,17 @@ class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
             self.dispatchEvent(new Event('load'));
             enhancedElement.dataset.loaded = 'true';
             return {
-                resolved: true
+                //the script itself does the resolving
+                //resolved: true
             } as PAP
         }else{
             const {doInline} = await import('./doInline.js');
             await doInline(enhancedElement);
+            //the script itself does the resolving
             //self.resolved = true;
         }  
         return {
-            resolved: true
+            //resolved: true
         } as PAP    
     }
 }
