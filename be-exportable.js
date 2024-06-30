@@ -63,8 +63,7 @@ class BeExportable extends BE {
             self.dispatchEvent(new Event('load'));
             enhancedElement.dataset.loaded = 'true';
             return {
-            //the script itself does the resolving
-            //resolved: true
+                resolved: true
             };
         }
         else {
