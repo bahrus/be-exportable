@@ -6,7 +6,8 @@
 		"experimentalDecorators": false,
 		"newLine": "LF",
 		"strict": true,
-		"lib": ["ESNext", "ESNext.String", "DOM"]
+		//"lib": ["ESNext", "ESNext.String", "DOM"],
+		"skipLibCheck": true
 	},
 	"files":[
 		"behivior.ts"
