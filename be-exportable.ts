@@ -2,7 +2,7 @@ import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
 import {Actions, AllProps, PAP} from './types';
 import {MountObserver} from 'mount-observer/MountObserver.js';
-import {IEnhancement,  BEAllProps} from 'trans-render/be/types';
+import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
 
 //TODO:  store in truly global place based on guid (symbol.for)
 const sharedTags = new Map<string, AllProps>();
@@ -23,9 +23,58 @@ class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
         },
         positractions: [...(beCnfg.positractions!)]
     };
+    #emc: EMC | undefined;
+    override async attach(el: HTMLScriptElement, enhancementInfo: EnhancementInfo) {
+        const {mountCnfg} = enhancementInfo;
+        this.#emc = mountCnfg;
+    }
     
     async hydrate(self: AllProps & EventTarget) : Promise<Partial<AllProps>>{
         const {enhancedElement, preferAttrForBareImports} = self;
+        if(enhancedElement.hasAttribute('blow-dry') || enhancedElement.dataset.blowDry){
+            //TODO move this to external file
+            const {BlowDry} = await import('blow-dry/blow-dry.js');
+            //double check again due to yielding the thread
+            if(enhancedElement.hasAttribute('blow-dry') || enhancedElement.dataset.blowDry){
+                const bd = new BlowDry();
+                bd.blowDryScriptElement(enhancedElement);
+            }
+        }
+        const scriptRef = enhancedElement.dataset.blowDryScriptRef;
+        if(scriptRef){
+            const ref = (<any>document.head)[scriptRef];
+            if(ref instanceof HTMLScriptElement){
+                //already taken care of, but need to wait for it to be loaded
+                if((<any>ref).exports){
+                    (<any>enhancedElement).exports = (<any>ref).exports;
+                    return {
+                        resolved: true,
+                    }
+                }else{
+                    await (<any>ref).beEnhanced.whenResolved(this.#emc);
+                    (<any>enhancedElement).exports = (<any>ref).exports;
+                    return {
+                        resolved: true,
+                    }
+                }
+            }else{
+                const sharedScriptElement = document.createElement('script');
+                sharedScriptElement.noModule = true;
+                (<any>document.head)[scriptRef] = sharedScriptElement;
+                if(Array.isArray(ref)){
+                    //array is of a url
+                    sharedScriptElement.src = ref[0];
+                }else{
+                    sharedScriptElement.innerHTML = ref;
+                }
+                document.head.appendChild(sharedScriptElement);
+                await (<any>sharedScriptElement).beEnhanced.whenResolved(this.#emc);
+                (<any>enhancedElement).exports = (<any>sharedScriptElement).exports;
+                return {
+                    resolved: true,
+                }
+            }
+        }
         delete enhancedElement.dataset.loaded;
         let {id} = enhancedElement;
         if(!id){

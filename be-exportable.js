@@ -18,8 +18,60 @@ class BeExportable extends BE {
         },
         positractions: [...(beCnfg.positractions)]
     };
+    #emc;
+    async attach(el, enhancementInfo) {
+        const { mountCnfg } = enhancementInfo;
+        this.#emc = mountCnfg;
+    }
     async hydrate(self) {
         const { enhancedElement, preferAttrForBareImports } = self;
+        if (enhancedElement.hasAttribute('blow-dry') || enhancedElement.dataset.blowDry) {
+            //TODO move this to external file
+            const { BlowDry } = await import('blow-dry/blow-dry.js');
+            //double check again due to yielding the thread
+            if (enhancedElement.hasAttribute('blow-dry') || enhancedElement.dataset.blowDry) {
+                const bd = new BlowDry();
+                bd.blowDryScriptElement(enhancedElement);
+            }
+        }
+        const scriptRef = enhancedElement.dataset.blowDryScriptRef;
+        if (scriptRef) {
+            const ref = document.head[scriptRef];
+            if (ref instanceof HTMLScriptElement) {
+                //already taken care of, but need to wait for it to be loaded
+                if (ref.exports) {
+                    enhancedElement.exports = ref.exports;
+                    return {
+                        resolved: true,
+                    };
+                }
+                else {
+                    await ref.beEnhanced.whenResolved(this.#emc);
+                    enhancedElement.exports = ref.exports;
+                    return {
+                        resolved: true,
+                    };
+                }
+            }
+            else {
+                const sharedScriptElement = document.createElement('script');
+                sharedScriptElement.noModule = true;
+                document.head[scriptRef] = sharedScriptElement;
+                if (Array.isArray(ref)) {
+                    //array is of a url
+                    sharedScriptElement.src = ref[0];
+                }
+                else {
+                    sharedScriptElement.innerHTML = ref;
+                }
+                document.head.appendChild(sharedScriptElement);
+                await sharedScriptElement.beEnhanced.whenResolved(this.#emc);
+                enhancedElement.exports = sharedScriptElement.exports;
+                return {
+                    resolved: true,
+                };
+            }
+        }
         delete enhancedElement.dataset.loaded;
         let { id } = enhancedElement;
         if (!id) {
