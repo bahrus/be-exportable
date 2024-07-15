@@ -22,6 +22,7 @@ class BeExportable extends BE {
     async attach(el, enhancementInfo) {
         const { mountCnfg } = enhancementInfo;
         this.#emc = mountCnfg;
+        await super.attach(el, enhancementInfo);
     }
     async hydrate(self) {
         const { enhancedElement, preferAttrForBareImports } = self;
@@ -39,15 +40,16 @@ class BeExportable extends BE {
             const ref = document.head[scriptRef];
             if (ref instanceof HTMLScriptElement) {
                 //already taken care of, but need to wait for it to be loaded
-                if (ref.exports) {
-                    enhancedElement.exports = ref.exports;
+                const exports = ref.beEnhanced[this.#emc.enhPropKey].exports;
+                if (exports) {
+                    self.exports = exports;
                     return {
                         resolved: true,
                     };
                 }
                 else {
-                    await ref.beEnhanced.whenResolved(this.#emc);
-                    enhancedElement.exports = ref.exports;
+                    const enhancement = await ref.beEnhanced.whenResolved(this.#emc);
+                    self.exports = enhancement.exports;
                     return {
                         resolved: true,
                     };
@@ -65,8 +67,8 @@ class BeExportable extends BE {
                     sharedScriptElement.innerHTML = ref;
                 }
                 document.head.appendChild(sharedScriptElement);
-                await sharedScriptElement.beEnhanced.whenResolved(this.#emc);
-                enhancedElement.exports = sharedScriptElement.exports;
+                const enhancement = await sharedScriptElement.beEnhanced.whenResolved(this.#emc);
+                self.exports = enhancement.exports;
                 return {
                     resolved: true,
                 };

@@ -27,6 +27,7 @@ class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
     override async attach(el: HTMLScriptElement, enhancementInfo: EnhancementInfo) {
         const {mountCnfg} = enhancementInfo;
         this.#emc = mountCnfg;
+        await super.attach(el, enhancementInfo);
     }
     
     async hydrate(self: AllProps & EventTarget) : Promise<Partial<AllProps>>{
@@ -45,14 +46,15 @@ class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
             const ref = (<any>document.head)[scriptRef];
             if(ref instanceof HTMLScriptElement){
                 //already taken care of, but need to wait for it to be loaded
-                if((<any>ref).exports){
-                    (<any>enhancedElement).exports = (<any>ref).exports;
+                const exports = (<any>ref).beEnhanced[this.#emc!.enhPropKey].exports;
+                if(exports){
+                    self.exports = exports; 
                     return {
                         resolved: true,
                     }
                 }else{
-                    await (<any>ref).beEnhanced.whenResolved(this.#emc);
-                    (<any>enhancedElement).exports = (<any>ref).exports;
+                    const enhancement = await (<any>ref).beEnhanced.whenResolved(this.#emc);
+                    self.exports = enhancement.exports;
                     return {
                         resolved: true,
                     }
@@ -68,8 +70,8 @@ class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
                     sharedScriptElement.innerHTML = ref;
                 }
                 document.head.appendChild(sharedScriptElement);
-                await (<any>sharedScriptElement).beEnhanced.whenResolved(this.#emc);
-                (<any>enhancedElement).exports = (<any>sharedScriptElement).exports;
+                const enhancement = await (<any>sharedScriptElement).beEnhanced.whenResolved(this.#emc);
+                self.exports = enhancement.exports;
                 return {
                     resolved: true,
                 }
