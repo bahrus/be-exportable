@@ -15,12 +15,13 @@ Make exports from inside a script tag accessible from the DOM.
 </script>
 ```
 
-The script tag ends up with a custom field:  oScript.beEnhanced.beExportable.exports that exposes each of the export const's.  It also emits event "load" when it has finished exporting.
+The script tag ends up with a custom field:  oScript.beEnhanced.beExportable.exports that exposes each of the export const's. 
 
 To wait for the script to load:
 
 ```JavaScript
-const enhancement = await oScript.beEnhanced.whenResolved('be-exportable');
+const {emc} = await import('be-exportable/behivior.js);
+const enhancement = await oScript.beEnhanced.whenResolved(emc);
 const {foo} = enhancement.exports;
 ```
 
