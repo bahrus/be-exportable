@@ -16,6 +16,8 @@ export interface AllProps<Exports=any> extends EndUserProps<Exports>{
 
 export type PAP = Partial<AllProps>;
 
+export type ProPAP = Promise<PAP>
+
 
 export interface Actions{
     hydrate(ap: AllProps): Promise<PAP>;
