@@ -42,7 +42,15 @@ External scripts are far more flexible, but cannot reference the script tag with
 
 If the adorned script tag is inside a template / shadowDOM realm that is repeated throughout the page, the script tag can share  the same export constants by setting the id to something starting with "shared-". To be extra safe, use a guid after the shared- prefix.
 
+## Integration with blow-dry
 
+If using this enhancement with xtal-element, to avoid the repeated and parsing of script issue, add attribute blow-dry to the script element:
+
+```html
+<script blow-dry nomodule be-exportable>
+    export const greeting = 'hello';
+</script>
+```
 
 ## Viewing Locally
 
