@@ -1,4 +1,4 @@
-# be-exportable
+# be-exportable (📦)
 
 [![Playwright Tests](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-exportable/actions/workflows/CI.yml)
 [![NPM version](https://badge.fury.io/js/be-exportable.png)](http://badge.fury.io/js/be-exportable)
