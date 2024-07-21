@@ -27,7 +27,15 @@ const {foo} = enhancement.exports;
 
 Inline scripts can reference the script tag with the keyword "selfish".
 
-Inline scripts are quite limited in the syntax.  Only "export const blah" is exported.
+Inline scripts are quite limited in the syntax.  Only "export const blah"'s are exported.
+
+If used repeatedly in a casual setting, you can reference 📦.js and then replace be-exportable with 📦:
+
+```html
+<script nomodule 📦>
+    export const foo = 'bar';
+</script>
+```
 
 ## External scripts
 
