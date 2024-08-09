@@ -1,11 +1,11 @@
-import { config as beCnfg } from 'be-enhanced/config.js';
+import { resolved, rejected, propInfo } from 'be-enhanced/cc.js';
 import { BE } from 'be-enhanced/BE.js';
 //TODO:  store in truly global place based on guid (symbol.for)
 const sharedTags = new Map();
 class BeExportable extends BE {
     static config = {
         propInfo: {
-            ...(beCnfg.propInfo),
+            ...propInfo,
             attached: {
                 def: true,
                 ro: true,
@@ -16,7 +16,9 @@ class BeExportable extends BE {
                 ifAllOf: ['attached']
             }
         },
-        positractions: [...(beCnfg.positractions)]
+        positractions: [
+            resolved, rejected
+        ]
     };
     #emc;
     async attach(el, enhancementInfo) {

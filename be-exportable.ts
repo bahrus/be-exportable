@@ -1,8 +1,8 @@
-import {config as beCnfg} from 'be-enhanced/config.js';
+import {resolved, rejected, propInfo} from 'be-enhanced/cc.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
 import {Actions, AllProps, PAP} from './types';
 import {MountObserver} from 'mount-observer/MountObserver.js';
-import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
+import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'ts-refs/trans-render/be/types';
 
 //TODO:  store in truly global place based on guid (symbol.for)
 const sharedTags = new Map<string, AllProps>();
@@ -10,7 +10,7 @@ const sharedTags = new Map<string, AllProps>();
 class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
     static override config: BEConfig<AllProps & BEAllProps, Actions & IEnhancement, any> = {
         propInfo: {
-            ...(beCnfg.propInfo),
+            ...propInfo,
             attached:{
                 def: true,
                 ro: true,
@@ -21,7 +21,9 @@ class BeExportable extends BE<any, any, HTMLScriptElement> implements Actions{
                 ifAllOf: ['attached']
             }
         },
-        positractions: [...(beCnfg.positractions!)]
+        positractions: [
+            resolved, rejected
+        ]
     };
     #emc: EMC | undefined;
     override async attach(el: HTMLScriptElement, enhancementInfo: EnhancementInfo) {
