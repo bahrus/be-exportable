@@ -1,5 +1,5 @@
 import {BlowDry} from 'blow-dry/blow-dry.js';
-import {AllProps, PAP, ProPAP} from './types';
+import {AllProps, PAP, ProPAP} from './ts-refs/be-exportable/types';
 import { EMC } from 'be-hive/be-hive';
 
 export async function blowDry(self: AllProps, emc: EMC): ProPAP{

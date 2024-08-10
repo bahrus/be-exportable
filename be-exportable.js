@@ -1,7 +1,13 @@
+// @ts-check
 import { resolved, rejected, propInfo } from 'be-enhanced/cc.js';
 import { BE } from 'be-enhanced/BE.js';
+/** @import {Actions} from './ts-refs/be-exportable/types' */
+
 //TODO:  store in truly global place based on guid (symbol.for)
 const sharedTags = new Map();
+/**
+ * @implements {Actions}
+ */
 class BeExportable extends BE {
     static config = {
         propInfo: {
