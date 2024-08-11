@@ -1,3 +1,4 @@
+// @ts-check
 export async function doInline(target) {
     const key = crypto.randomUUID();
     window[key] = target;
