@@ -21,7 +21,7 @@ function getModifiedText(key, innerText, keyword){
             }
 
             case 'class': {
-                debugger;
+                //debugger;
                 const iPosOfOpenBrace = token.indexOf('{');
                 const lhs = token.substr(0, iPosOfOpenBrace).trim();
                 splitText[i] = `${winKey}.beEnhanced.beExportable.exports.${lhs} = ${keyword} ${lhs} {
