@@ -1,10 +1,13 @@
 // @ts-check
-export async function doInline(target) {
-    const key = crypto.randomUUID();
-    window[key] = target;
-    let innerText = target.innerText;
-    innerText = innerText.replaceAll('selfish', `window['${key}']`);
-    const splitText = innerText.split('export const ');
+
+/**
+ * 
+ * @param {string} key 
+ * @param {string} innerText 
+ * @param {string} splitTerm 
+ */
+function getModifiedText(key, innerText, splitTerm){
+    const splitText = innerText.split(splitTerm);
     const winKey = `window['${key}']`;
     for (let i = 1, ii = splitText.length; i < ii; i++) {
         const token = splitText[i];
@@ -12,7 +15,15 @@ export async function doInline(target) {
         const lhs = token.substr(0, iPosOfEq).trim();
         splitText[i] = `const ${lhs}  = ${winKey}.beEnhanced.beExportable.exports.${lhs} = ${token.substr(iPosOfEq + 1)};`;
     }
-    let modifiedText = splitText.join('');
+    return splitText.join('');
+}
+export async function doInline(target) {
+    const key = crypto.randomUUID();
+    window[key] = target;
+    let innerText = target.innerText;
+    innerText = innerText.replaceAll('selfish', `window['${key}']`);
+    let modifiedText = getModifiedText(key, innerText, 'export const');
+    modifiedText = getModifiedText(key, modifiedText, 'export class ');
     modifiedText = /* js */ `
 ${modifiedText}
 window['${key}'].dispatchEvent(new Event('load'));
