@@ -24,13 +24,13 @@
   ],
   "types": "types.d.ts",
   "dependencies": {
-    "be-enhanced": "0.0.133",
-    "be-hive": "0.0.202",
+    "be-enhanced": "0.0.137",
+    "be-hive": "0.0.206",
     "blow-dry": "0.0.11",
-    "trans-render": "0.0.825"
+    "trans-render": "0.0.831"
   },
   "devDependencies": {
-    "@playwright/test": "1.46.0",
+    "@playwright/test": "1.46.1",
     "may-it-serve": "0.0.8"
   },
   "scripts": {
